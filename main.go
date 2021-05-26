@@ -5,42 +5,31 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
-	"sort"
-	"strings"
+
+	prettier "github.com/utopia-planitia/chart-prettier/pkg"
 )
 
 func main() {
+	err := run()
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+func run() error {
 	yml, err := ioutil.ReadAll(os.Stdin)
 	if err != nil {
-		log.Fatalln(err.Error())
+		return err
 	}
 
-	manifests := splitManifests(string(yml))
-
-	sort.Sort(ByOrder(manifests))
+	manifests := prettier.SplitManifests(string(yml))
 
 	for _, manifest := range manifests {
-		if os.Getenv("KEEP_TESTS") == "" {
-			if strings.Contains(strings.ToLower(manifest.Metadata.Name), "test") {
-				continue
-			}
-		}
-
-		yaml, err := manifest.Print()
+		_, err = fmt.Printf("---\n%s\n", manifest.Yaml)
 		if err != nil {
-			log.Fatalln(err.Error())
-		}
-
-		if os.Getenv("DISABLE_KEY_SORTING") == "" {
-			yaml, err = manifest.SortedByKeys()
-			if err != nil {
-				log.Fatalln(err.Error())
-			}
-		}
-
-		_, err = fmt.Printf("---\n%s\n", yaml)
-		if err != nil {
-			log.Fatalln(err.Error())
+			return err
 		}
 	}
+
+	return nil
 }

@@ -1,16 +1,17 @@
-# msort
+# csort
 
-msort takes a list of kubernetes manifests as input and sorts them to produce a reproducible artifact.
+`csort` stands for chart sorter.
 
-## sorted keys
+Chart sorter reads the template folder of a helm chart and places each object in its own file.
 
-To generate always the same output, the manifests are sorted by key.
-The sorting happens by using [yq](https://github.com/mikefarah/yq). yq is a wrapper around [jq](https://github.com/stedolan/jq).
-
-To disable this feature set `DISABLE_KEY_SORTING=1`.
+In case multiple manifests of the same type exist, the name schema for this type switches to {type}-{name}.yaml.
 
 ## Example
 
 ``` bash
-helmfile template | msort > manifests.yaml
+csort chart/templates
+```
+
+``` bash
+cat all-the-things.yaml | csort chart/templates
 ```
