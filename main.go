@@ -55,9 +55,13 @@ func cleanupChart(c *cli.Context) error {
 
 		if stdin {
 			buf := bytes.Buffer{}
-			buf.ReadFrom(os.Stdin)
 
-			err = chart.AddManifests(string(buf.Bytes()))
+			_, err := buf.ReadFrom(os.Stdin)
+			if err != nil {
+				return fmt.Errorf("readming from stdin: %v", err)
+			}
+
+			err = chart.AddManifests(buf.String())
 			if err != nil {
 				return fmt.Errorf("loading manifests from stdin: %v", err)
 			}
