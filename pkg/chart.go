@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/spf13/afero"
+	"golang.org/x/sys/unix"
 )
 
 type Chart struct {
@@ -85,7 +86,10 @@ func (c *Chart) WriteOut(appFs afero.Fs, path string) error {
 		filename := filepath.Join(path, name+ext)
 		content := manifest.Yaml
 
-		err := afero.WriteFile(appFs, filename, []byte(content), 0644)
+		umask := unix.Umask(0)
+		unix.Umask(umask)
+
+		err := afero.WriteFile(appFs, filename, []byte(content), fs.FileMode(0666^umask))
 		if err != nil {
 			return err
 		}
