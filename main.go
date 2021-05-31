@@ -22,7 +22,10 @@ func run() error {
 		return err
 	}
 
-	manifests := prettier.SplitManifests(string(yml))
+	manifests, err := prettier.SplitManifests(string(yml))
+	if err != nil {
+		return err
+	}
 
 	for _, manifest := range manifests {
 		_, err = fmt.Printf("---\n%s\n", manifest.Yaml)
