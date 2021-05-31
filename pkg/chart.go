@@ -85,7 +85,7 @@ func (c *Chart) WriteOut(appFs afero.Fs, path string) error {
 		filename := filepath.Join(path, name+ext)
 		content := manifest.Yaml
 
-		err := afero.WriteFile(appFs, filename, []byte(content), 0644)
+		err := afero.WriteFile(appFs, filename, []byte(content), 0664)
 		if err != nil {
 			return err
 		}
