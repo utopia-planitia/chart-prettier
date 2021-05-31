@@ -1,13 +1,5 @@
-github.com/damoon/fstesting v0.0.0-20210531085735-137ee2218781 h1:ZJM/itp+tFEcmJps5vGyRR5OxLuo6AeS4E3fIN6pYDA=
-github.com/damoon/fstesting v0.0.0-20210531085735-137ee2218781/go.mod h1:bKhTu4lNKGnqcC2OGfJAnkDgB4iIKRNXUo6HmsMZK0s=
-github.com/damoon/fstesting v0.0.0-20210531142841-f835e79647c7 h1:4BzsNO1/rxz5LrdzJ1SNdTcVvySueQsxzSmBkUxTm3w=
-github.com/damoon/fstesting v0.0.0-20210531142841-f835e79647c7/go.mod h1:bKhTu4lNKGnqcC2OGfJAnkDgB4iIKRNXUo6HmsMZK0s=
-github.com/damoon/fstesting v0.0.0-20210531160946-3a702a1d4a42 h1:f3lnWbymVJoA1ptK6AReOf+KoqkqtAuJYBCj9FhEpno=
-github.com/damoon/fstesting v0.0.0-20210531160946-3a702a1d4a42/go.mod h1:bKhTu4lNKGnqcC2OGfJAnkDgB4iIKRNXUo6HmsMZK0s=
 github.com/damoon/fstesting v0.0.0-20210531161408-b71b8a1eb236 h1:7NbPP0NlwFu32qpvvsUQo+BA2OuHTsTomCYE6kc5irA=
 github.com/damoon/fstesting v0.0.0-20210531161408-b71b8a1eb236/go.mod h1:bKhTu4lNKGnqcC2OGfJAnkDgB4iIKRNXUo6HmsMZK0s=
-github.com/damoon/fstesting v0.0.0-20210531162058-68ec04a5ed89 h1:edVYou52MLSAqKT/vYbCgEyRSfA1gfdGFICBMnF7DXY=
-github.com/damoon/fstesting v0.0.0-20210531162058-68ec04a5ed89/go.mod h1:bKhTu4lNKGnqcC2OGfJAnkDgB4iIKRNXUo6HmsMZK0s=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/kr/fs v0.1.0/go.mod h1:FFnZGqtBN9Gxj7eW1uZ42v5BccTP0vu6NEaFoC2HwRg=
 github.com/pkg/errors v0.8.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
