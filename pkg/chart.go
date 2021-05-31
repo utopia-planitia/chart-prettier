@@ -26,7 +26,10 @@ func (c *Chart) LoadChart(appFs afero.Fs, path string) error {
 				return err
 			}
 
-			c.AddManifests(string(content))
+			err = c.AddManifests(string(content))
+			if err != nil {
+				return fmt.Errorf("add manifests from %s: %v", path, err)
+			}
 		}
 
 		return nil
@@ -47,7 +50,10 @@ func (c *Chart) DeleteFiles(appFs afero.Fs, path string) error {
 		}
 
 		if !info.IsDir() && isManifestFile(info.Name()) {
-			appFs.Remove(path)
+			err = appFs.Remove(path)
+			if err != nil {
+				return err
+			}
 		}
 
 		return nil
