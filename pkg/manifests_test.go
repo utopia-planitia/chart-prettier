@@ -40,6 +40,20 @@ spec:
           protocol: TCP
 {{ .AdditionalContainers | toYaml }}
 `
+	clusterRoleBindingYaml := `
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: clusterrole-name-bind
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: clusterrole-name
+subjects:
+- kind: ServiceAccount
+  name: service-account-name
+  namespace: some-namespace
+`
 
 	type args struct {
 		yml string
@@ -83,6 +97,24 @@ spec:
 					Namespace: "",
 				},
 				Yaml: strings.TrimSpace(podTemplateYaml),
+			},
+			false,
+		},
+		{
+			"cluster role binding with multiple 'name' attributes",
+			args{
+				yml: clusterRoleBindingYaml,
+			},
+			Manifest{
+				Kind: "ClusterRoleBinding",
+				Metadata: struct {
+					Name      string
+					Namespace string
+				}{
+					Name:      "clusterrole-name-bind",
+					Namespace: "",
+				},
+				Yaml: strings.TrimSpace(clusterRoleBindingYaml),
 			},
 			false,
 		},

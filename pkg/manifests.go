@@ -70,17 +70,34 @@ func NewManifest(yml string) (Manifest, error) {
 }
 
 func stripDown(ymlIn string) string {
-	keepLine := func(line string) bool {
-		lowerCase := strings.ToLower(line)
-		return strings.HasPrefix(lowerCase, "kind: ") || strings.HasPrefix(lowerCase, "metadata:") || strings.HasPrefix(lowerCase, "  name:") || strings.HasPrefix(lowerCase, "  namespace:")
-	}
-
 	buf := strings.Builder{}
+	metadata := false
 
 	for _, line := range strings.Split(ymlIn, "\n") {
-		if keepLine(line) {
-			buf.WriteString(line)
-			buf.WriteString("\n")
+		lowerCase := strings.ToLower(line)
+		if strings.HasPrefix(lowerCase, "kind: ") {
+			buf.WriteString(line + "\n")
+			continue
+		}
+
+		if strings.HasPrefix(lowerCase, "metadata:") {
+			buf.WriteString(line + "\n")
+			metadata = true
+			continue
+		}
+
+		if metadata {
+			if !(strings.HasPrefix(lowerCase, " ") || strings.HasPrefix(lowerCase, "\t")) {
+				metadata = false
+				continue
+			}
+
+			trimedLowerCase := strings.TrimSpace(lowerCase)
+
+			if strings.HasPrefix(trimedLowerCase, "name:") || strings.HasPrefix(trimedLowerCase, "namespace:") {
+				buf.WriteString(line + "\n")
+				continue
+			}
 		}
 	}
 
