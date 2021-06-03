@@ -20,8 +20,14 @@ func main() {
 
 func run(args []string) error {
 	app := &cli.App{
-		Name:   "chart-prettier",
-		Usage:  "sort files in chart directories",
+		Name:  "chart-prettier",
+		Usage: "sort files in chart directories",
+		Flags: []cli.Flag{
+			&cli.BoolFlag{
+				Name:  "truncate",
+				Usage: "only use stdin and remove all existing manifest files",
+			},
+		},
 		Action: cleanupChart,
 	}
 
@@ -43,14 +49,18 @@ func cleanupChart(c *cli.Context) error {
 		return fmt.Errorf("using stdin only supports exactly one chart directory")
 	}
 
+	truncate := c.Bool("truncate")
+
 	appFs := afero.NewOsFs()
 
 	for _, path := range c.Args().Slice() {
 		chart := &prettier.Chart{}
 
-		err := chart.LoadChart(appFs, path)
-		if err != nil {
-			return fmt.Errorf("loading manifests from existing chart: %v", err)
+		if !truncate {
+			err := chart.LoadChart(appFs, path)
+			if err != nil {
+				return fmt.Errorf("loading manifests from existing chart: %v", err)
+			}
 		}
 
 		if stdin {
