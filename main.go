@@ -24,8 +24,14 @@ func run(args []string) error {
 		Usage: "sort files in chart directories",
 		Flags: []cli.Flag{
 			&cli.BoolFlag{
-				Name:  "truncate",
-				Usage: "only use stdin and remove all existing manifest files",
+				Name:    "truncate",
+				Aliases: []string{"t"},
+				Usage:   "only use stdin and remove all existing manifest files",
+			},
+			&cli.BoolFlag{
+				Name:    "verbose",
+				Aliases: []string{"v"},
+				Usage:   "show progress",
 			},
 		},
 		Action: cleanupChart,
@@ -40,6 +46,8 @@ func run(args []string) error {
 }
 
 func cleanupChart(c *cli.Context) error {
+	verbose := c.Bool("verbose")
+
 	stdin, err := detectStdinPipe()
 	if err != nil {
 		return fmt.Errorf("detect pipe to stdin: %v", err)
@@ -57,13 +65,19 @@ func cleanupChart(c *cli.Context) error {
 		chart := &prettier.Chart{}
 
 		if !truncate {
+			logVerbose(verbose, "reading existing files")
+
 			err := chart.LoadChart(appFs, path)
 			if err != nil {
 				return fmt.Errorf("loading manifests from existing chart: %v", err)
 			}
+
+			logVerbose(verbose, "done")
 		}
 
 		if stdin {
+			logVerbose(verbose, "reading stdin")
+
 			buf := bytes.Buffer{}
 
 			_, err := buf.ReadFrom(os.Stdin)
@@ -75,17 +89,27 @@ func cleanupChart(c *cli.Context) error {
 			if err != nil {
 				return fmt.Errorf("loading manifests from stdin: %v", err)
 			}
+
+			logVerbose(verbose, "done")
 		}
+
+		logVerbose(verbose, "deleting files")
 
 		err = chart.DeleteFiles(appFs, path)
 		if err != nil {
 			return fmt.Errorf("cleanup preexisting manifests: %v", err)
 		}
 
+		logVerbose(verbose, "done")
+
+		logVerbose(verbose, "writing files")
+
 		err = chart.WriteOut(appFs, path)
 		if err != nil {
 			return fmt.Errorf("create new manifests in chart: %v", err)
 		}
+
+		logVerbose(verbose, "done")
 	}
 
 	return nil
@@ -100,4 +124,12 @@ func detectStdinPipe() (bool, error) {
 	pipedToStdin := (stat.Mode() & os.ModeCharDevice) == 0
 
 	return pipedToStdin, nil
+}
+
+func logVerbose(verbose bool, message string) {
+	if !verbose {
+		return
+	}
+
+	log.Println(message)
 }
