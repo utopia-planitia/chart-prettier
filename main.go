@@ -33,6 +33,12 @@ func run(args []string) error {
 				Aliases: []string{"v"},
 				Usage:   "show progress",
 			},
+			&cli.BoolFlag{
+				Name:        "stdin",
+				Aliases:     []string{"i"},
+				Usage:       "read from stdin",
+				DefaultText: "auto",
+			},
 		},
 		Action: cleanupChart,
 	}
@@ -48,9 +54,14 @@ func run(args []string) error {
 func cleanupChart(c *cli.Context) error {
 	verbose := c.Bool("verbose")
 
-	stdin, err := detectStdinPipe()
-	if err != nil {
-		return fmt.Errorf("detect pipe to stdin: %v", err)
+	stdin := c.Bool("stdin")
+	var err error
+
+	if !c.IsSet("stdin") {
+		stdin, err = detectStdinPipe()
+		if err != nil {
+			return fmt.Errorf("detect pipe to stdin: %v", err)
+		}
 	}
 
 	if stdin && c.Args().Len() != 1 {
