@@ -55,8 +55,7 @@ func SplitManifests(yml string) ([]Manifest, error) {
 }
 
 func NewManifest(yml string) (Manifest, error) {
-	d := yaml.NewDecoder(strings.NewReader(stripDown(yml)))
-	d.KnownFields(true)
+	d := yaml.NewDecoder(strings.NewReader(excludeTemplates(yml)))
 	m := Manifest{}
 
 	err := d.Decode(&m) // invalid yaml returns empty string as a kind
@@ -69,36 +68,19 @@ func NewManifest(yml string) (Manifest, error) {
 	return m, nil
 }
 
-func stripDown(ymlIn string) string {
+func excludeTemplates(ymlIn string) string {
 	buf := strings.Builder{}
-	metadata := false
 
 	for _, line := range strings.Split(ymlIn, "\n") {
-		lowerCase := strings.ToLower(line)
-		if strings.HasPrefix(lowerCase, "kind: ") {
-			buf.WriteString(line + "\n")
+		if strings.Contains(line, "{{") {
 			continue
 		}
 
-		if strings.HasPrefix(lowerCase, "metadata:") {
-			buf.WriteString(line + "\n")
-			metadata = true
+		if strings.Contains(line, "}}") {
 			continue
 		}
 
-		if metadata {
-			if !(strings.HasPrefix(lowerCase, " ") || strings.HasPrefix(lowerCase, "\t")) {
-				metadata = false
-				continue
-			}
-
-			trimedLowerCase := strings.TrimSpace(lowerCase)
-
-			if strings.HasPrefix(trimedLowerCase, "name:") || strings.HasPrefix(trimedLowerCase, "namespace:") {
-				buf.WriteString(line + "\n")
-				continue
-			}
-		}
+		buf.WriteString(line + "\n")
 	}
 
 	return buf.String()
