@@ -3,6 +3,7 @@ package prettier
 import (
 	"bytes"
 	"fmt"
+	"io"
 	"regexp"
 	"strings"
 
@@ -56,9 +57,9 @@ func SplitManifests(yml string) ([]Manifest, error) {
 
 func manifestsFromChunk(chunk string) ([]Manifest, error) {
 	manifest, err := NewManifest(chunk)
-	// if err == io.EOF {
-	// 	continue
-	// }
+	if err == io.EOF {
+		return []Manifest{}, nil
+	}
 	if err != nil {
 		return []Manifest{}, fmt.Errorf("parse yaml failed: %v: %v", err, chunk)
 	}
