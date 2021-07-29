@@ -219,3 +219,81 @@ spec:
 		})
 	}
 }
+
+func Test_manifestsFromChunk(t *testing.T) {
+	podOne := `
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    key: value
+  name: test-pod1
+spec:
+  containers:
+    - image: myimage:latest
+      name: thing
+      ports:
+        - containerPort: 80
+          name: web
+          protocol: TCP
+`
+	listOne := `
+apiVersion: v1
+kind: List
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    name: test-pod1
+    labels:
+      key: value
+  spec:
+    containers:
+      - name: thing
+        image: myimage:latest
+        ports:
+          - containerPort: 80
+            name: web
+            protocol: TCP
+`
+	manifestPodOne := Manifest{
+		Kind: "Pod",
+		Metadata: struct {
+			Name      string
+			Namespace string
+		}{
+			Name: "test-pod1",
+		},
+		Yaml: strings.TrimSpace(podOne),
+	}
+
+	tests := []struct {
+		name    string
+		chunk   string
+		want    []Manifest
+		wantErr bool
+	}{
+		{
+			name:  "pod",
+			chunk: podOne,
+			want:  []Manifest{manifestPodOne},
+		},
+		{
+			name:  "list",
+			chunk: listOne,
+			want:  []Manifest{manifestPodOne},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := manifestsFromChunk(tt.chunk)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("manifestsFromChunk() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("manifestsFromChunk() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

@@ -1,8 +1,8 @@
 package prettier
 
 import (
+	"bytes"
 	"fmt"
-	"io"
 	"regexp"
 	"strings"
 
@@ -16,6 +16,10 @@ type Manifest struct {
 		Namespace string
 	}
 	Yaml string
+}
+
+type List struct {
+	Items []interface{}
 }
 
 func SplitManifests(yml string) ([]Manifest, error) {
@@ -33,19 +37,60 @@ func SplitManifests(yml string) ([]Manifest, error) {
 	chunks := separator.Split(yml, -1)
 	manifests := []Manifest{}
 
-	for _, doc := range chunks {
-		doc = strings.TrimSpace(doc)
-
-		if doc == "" {
+	for _, chunk := range chunks {
+		chunk = strings.TrimSpace(chunk)
+		if chunk == "" {
 			continue
 		}
 
-		manifest, err := NewManifest(doc)
-		if err == io.EOF {
-			continue
-		}
+		extracted, err := manifestsFromChunk(chunk)
 		if err != nil {
-			return []Manifest{}, fmt.Errorf("parse yaml failed: %v: %v", err, doc)
+			return []Manifest{}, err
+		}
+
+		manifests = append(manifests, extracted...)
+	}
+
+	return manifests, nil
+}
+
+func manifestsFromChunk(chunk string) ([]Manifest, error) {
+	manifest, err := NewManifest(chunk)
+	// if err == io.EOF {
+	// 	continue
+	// }
+	if err != nil {
+		return []Manifest{}, fmt.Errorf("parse yaml failed: %v: %v", err, chunk)
+	}
+
+	if strings.ToLower(manifest.Kind) != "list" {
+		return []Manifest{manifest}, nil
+	}
+
+	ls := List{}
+
+	err = yaml.Unmarshal([]byte(chunk), &ls)
+	if err != nil {
+		return []Manifest{}, err
+	}
+
+	manifests := []Manifest{}
+
+	for _, element := range ls.Items {
+		var buf bytes.Buffer
+
+		enc := yaml.NewEncoder(&buf)
+
+		enc.SetIndent(2)
+
+		err := enc.Encode(element)
+		if err != nil {
+			return []Manifest{}, err
+		}
+
+		manifest, err := NewManifest(buf.String())
+		if err != nil {
+			return []Manifest{}, err
 		}
 
 		manifests = append(manifests, manifest)
