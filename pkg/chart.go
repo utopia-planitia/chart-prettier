@@ -92,6 +92,10 @@ func (c *Chart) WriteOut(appFs afero.Fs, path string) error {
 		filename := filepath.Join(path, name+ext)
 		content := manifest.Yaml
 
+		if !strings.HasSuffix(content, "\n") {
+			content += "\n"
+		}
+
 		umask := unix.Umask(0)
 		unix.Umask(umask)
 
