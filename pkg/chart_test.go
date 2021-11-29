@@ -9,7 +9,7 @@ import (
 )
 
 func TestChart(t *testing.T) {
-	chart := &Chart{}
+	chart := NewChart()
 
 	appFs, err := fstesting.InMemoryCopy("testdata/pods-test/chart", "testdata/pods-test/chart")
 	if err != nil {

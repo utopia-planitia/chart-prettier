@@ -1,8 +1,10 @@
 package prettier
 
 import (
+	"bytes"
 	"fmt"
 	"io/fs"
+	"log"
 	"path/filepath"
 	"strings"
 
@@ -12,6 +14,13 @@ import (
 
 type Chart struct {
 	manifests []Manifest
+	files     map[string][]byte
+}
+
+func NewChart() *Chart {
+	c := &Chart{}
+	c.files = make(map[string][]byte)
+	return c
 }
 
 func (c *Chart) LoadChart(appFs afero.Fs, path string) error {
@@ -21,14 +30,9 @@ func (c *Chart) LoadChart(appFs afero.Fs, path string) error {
 		}
 
 		if !info.IsDir() && isManifestFile(info.Name()) {
-			content, err := afero.ReadFile(appFs, path)
+			err = c.AddFile(appFs, path)
 			if err != nil {
 				return err
-			}
-
-			err = c.AddManifests(string(content))
-			if err != nil {
-				return fmt.Errorf("add manifests from %s: %v", path, err)
 			}
 		}
 
@@ -83,6 +87,9 @@ func (c *Chart) WriteOut(appFs afero.Fs, path string) error {
 		return err
 	}
 
+	umask := unix.Umask(0)
+	unix.Umask(umask)
+
 	for name, manifest := range unique {
 		ext := ".yaml"
 		if strings.Contains(manifest.Yaml, "{{") {
@@ -96,13 +103,36 @@ func (c *Chart) WriteOut(appFs afero.Fs, path string) error {
 			content += "\n"
 		}
 
-		umask := unix.Umask(0)
-		unix.Umask(umask)
+		err := afero.WriteFile(appFs, filename, []byte(content), fs.FileMode(0666^umask))
+		if err != nil {
+			return err
+		}
+	}
+
+	for filename, content := range c.files {
+		if !bytes.HasSuffix(content, []byte("\n")) {
+			content = append(content, []byte("\n")...)
+		}
 
 		err := afero.WriteFile(appFs, filename, []byte(content), fs.FileMode(0666^umask))
 		if err != nil {
 			return err
 		}
+	}
+
+	return nil
+}
+
+func (c *Chart) AddFile(appFs afero.Fs, path string) error {
+	content, err := afero.ReadFile(appFs, path)
+	if err != nil {
+		return err
+	}
+
+	err = c.AddManifests(string(content))
+	if err != nil {
+		log.Printf("add manifests from %s: %v", path, err)
+		c.files[path] = content
 	}
 
 	return nil

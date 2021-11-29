@@ -38,6 +38,10 @@ func SplitManifests(yml string) ([]Manifest, error) {
 	chunks := separator.Split(yml, -1)
 	manifests := []Manifest{}
 
+	if len(chunks) > 1 && containTemplates(chunks) {
+		return []Manifest{}, fmt.Errorf("unable to handle templates in a multi document file")
+	}
+
 	for _, chunk := range chunks {
 		chunk = strings.TrimSpace(chunk)
 		if chunk == "" {
@@ -53,6 +57,20 @@ func SplitManifests(yml string) ([]Manifest, error) {
 	}
 
 	return manifests, nil
+}
+
+func containTemplates(chunks []string) bool {
+	for _, chunk := range chunks {
+		if strings.Contains(chunk, "{{") {
+			return true
+		}
+
+		if strings.Contains(chunk, "}}") {
+			return true
+		}
+	}
+
+	return false
 }
 
 func manifestsFromChunk(chunk string) ([]Manifest, error) {

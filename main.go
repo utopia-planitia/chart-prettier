@@ -73,7 +73,7 @@ func cleanupChart(c *cli.Context) error {
 	appFs := afero.NewOsFs()
 
 	for _, path := range c.Args().Slice() {
-		chart := &prettier.Chart{}
+		chart := prettier.NewChart()
 
 		if !truncate {
 			logVerbose(verbose, "reading existing files")
