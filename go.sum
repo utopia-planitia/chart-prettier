@@ -48,8 +48,8 @@ github.com/cncf/udpa/go v0.0.0-20200629203442-efcf912fb354/go.mod h1:WmhPx2Nbnht
 github.com/cncf/udpa/go v0.0.0-20201120205902-5459f2c99403/go.mod h1:WmhPx2Nbnhtbo57+VJT5O0JRkEi1Wbu0z5j0R8u5Hbk=
 github.com/cpuguy83/go-md2man/v2 v2.0.1 h1:r/myEWzV9lfsM1tFLgDyu0atFtJ1fXn261LKYj/3DxU=
 github.com/cpuguy83/go-md2man/v2 v2.0.1/go.mod h1:tgQtvFlXSQOSOSIRvRPT7W67SCa46tRHOmNcaadrF8o=
-github.com/damoon/fstesting v0.0.0-20220415040243-88b5eb6f3946 h1:rpIpY6YhD7jRAWtqBdT5ikbcSFgS9TyA3Qb4Fo7xENo=
-github.com/damoon/fstesting v0.0.0-20220415040243-88b5eb6f3946/go.mod h1:nwG2uxx7TSBH+mUwPH8T088wJxjs7NXv+7ImzB5Cco8=
+github.com/damoon/fstesting v0.0.0-20220422002419-34a67c1831be h1:U43XmjoC6LP5JVWTzIy9WOCUWOjLZPyiuIYZkhK5hWo=
+github.com/damoon/fstesting v0.0.0-20220422002419-34a67c1831be/go.mod h1:nwG2uxx7TSBH+mUwPH8T088wJxjs7NXv+7ImzB5Cco8=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/envoyproxy/go-control-plane v0.9.0/go.mod h1:YTl/9mNaCwkRvm6d1a2C3ymFceY/DCBVvsKhRF0iEA4=
 github.com/envoyproxy/go-control-plane v0.9.1-0.20191026205805-5f8ba28d4473/go.mod h1:YTl/9mNaCwkRvm6d1a2C3ymFceY/DCBVvsKhRF0iEA4=
