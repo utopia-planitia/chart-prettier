@@ -1,6 +1,6 @@
 module github.com/utopia-planitia/chart-prettier
 
-go 1.18
+go 1.19
 
 require (
 	github.com/damoon/fstesting v0.0.0-20220801230346-49039c01423b
