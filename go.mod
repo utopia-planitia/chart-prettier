@@ -5,7 +5,7 @@ go 1.19
 require (
 	github.com/damoon/fstesting v0.0.0-20220824184126-d25130c5ab3a
 	github.com/spf13/afero v1.9.2
-	github.com/urfave/cli/v2 v2.16.2
+	github.com/urfave/cli/v2 v2.16.3
 	golang.org/x/sys v0.0.0-20220909162455-aba9fc2a8ff2
 	gopkg.in/yaml.v3 v3.0.1
 )
