@@ -3,7 +3,7 @@ module github.com/utopia-planitia/chart-prettier
 go 1.19
 
 require (
-	github.com/damoon/fstesting v0.0.0-20221212233314-217543975b43
+	github.com/damoon/fstesting v0.0.0-20221213165622-2fc419747e77
 	github.com/spf13/afero v1.9.3
 	github.com/urfave/cli/v2 v2.23.7
 	golang.org/x/sys v0.3.0
