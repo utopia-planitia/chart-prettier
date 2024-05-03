@@ -13,4 +13,4 @@ jobs:
         uses: golangci/golangci-lint-action@9d1e0624a798bb64f6c3cea93db47765312263dc # v5
         with:
           # Required: the version of golangci-lint is required and must be specified without patch version: we always use the latest patch version.
-          version: v1.57.2
+          version: v1.58.0
