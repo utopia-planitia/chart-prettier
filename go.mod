@@ -6,7 +6,7 @@ require (
 	github.com/damoon/fstesting v0.0.0-20241024185336-ffb6b94276ac
 	github.com/spf13/afero v1.11.0
 	github.com/urfave/cli/v2 v2.27.5
-	golang.org/x/sys v0.26.0
+	golang.org/x/sys v0.27.0
 	gopkg.in/yaml.v3 v3.0.1
 )
 
