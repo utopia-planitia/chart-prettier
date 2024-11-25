@@ -1180,8 +1180,8 @@ github.com/cncf/xds/go v0.0.0-20230607035331-e9ce68804cb4/go.mod h1:eXthEFrGJvWH
 github.com/cpuguy83/go-md2man/v2 v2.0.5 h1:ZtcqGrnekaHpVLArFSe4HK5DoKx1T0rq2DwVB0alcyc=
 github.com/cpuguy83/go-md2man/v2 v2.0.5/go.mod h1:tgQtvFlXSQOSOSIRvRPT7W67SCa46tRHOmNcaadrF8o=
 github.com/creack/pty v1.1.9/go.mod h1:oKZEueFk5CKHvIhNR5MUki03XCEU+Q6VDXinZuGJ33E=
-github.com/damoon/fstesting v0.0.0-20241111014331-93dbd2a5aacf h1:8hkf+cV8vAIIB4gT1ENz4kfUOaMzH3I5TrAXL4L98XE=
-github.com/damoon/fstesting v0.0.0-20241111014331-93dbd2a5aacf/go.mod h1:qc+pOZ4H7qQ8Zc06ruaX/ITTZEPYcLT5fiY7hBvGSug=
+github.com/damoon/fstesting v0.0.0-20241125184730-97e8fe9d2ec7 h1:l3U9WyKrL/R4agjj/0ulHeO9IcCn9uweNcqpniOtRJw=
+github.com/damoon/fstesting v0.0.0-20241125184730-97e8fe9d2ec7/go.mod h1:qc+pOZ4H7qQ8Zc06ruaX/ITTZEPYcLT5fiY7hBvGSug=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/docopt/docopt-go v0.0.0-20180111231733-ee0de3bc6815/go.mod h1:WwZ+bS3ebgob9U8Nd0kOddGdZWjyMGR8Wziv+TBNwSE=
