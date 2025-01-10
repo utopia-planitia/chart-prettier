@@ -1,11 +1,11 @@
 module github.com/utopia-planitia/chart-prettier
 
-go 1.21
+go 1.21.1
 
 toolchain go1.23.4
 
 require (
-	github.com/damoon/fstesting v0.0.0-20250104003752-63f6aaeb5924
+	github.com/damoon/fstesting v0.0.0-20250109193019-fc4c70e65c70
 	github.com/spf13/afero v1.12.0
 	github.com/urfave/cli/v2 v2.27.5
 	golang.org/x/sys v0.29.0
