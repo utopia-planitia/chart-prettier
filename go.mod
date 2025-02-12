@@ -2,7 +2,7 @@ module github.com/utopia-planitia/chart-prettier
 
 go 1.21.1
 
-toolchain go1.23.6
+toolchain go1.24.0
 
 require (
 	github.com/damoon/fstesting v0.0.0-20250210204122-469e4d7d5b5d
