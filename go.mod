@@ -5,7 +5,7 @@ go 1.21.1
 toolchain go1.24.0
 
 require (
-	github.com/damoon/fstesting v0.0.0-20250213073037-ad75395ba823
+	github.com/damoon/fstesting v0.0.0-20250214073415-007fb6bfd80e
 	github.com/spf13/afero v1.12.0
 	github.com/urfave/cli/v2 v2.27.5
 	golang.org/x/sys v0.30.0
