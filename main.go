@@ -7,7 +7,7 @@ import (
 	"os"
 
 	"github.com/spf13/afero"
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 	prettier "github.com/utopia-planitia/chart-prettier/pkg"
 )
 
