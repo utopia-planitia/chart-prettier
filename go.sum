@@ -1,7 +1,7 @@
 github.com/cpuguy83/go-md2man/v2 v2.0.5 h1:ZtcqGrnekaHpVLArFSe4HK5DoKx1T0rq2DwVB0alcyc=
 github.com/cpuguy83/go-md2man/v2 v2.0.5/go.mod h1:tgQtvFlXSQOSOSIRvRPT7W67SCa46tRHOmNcaadrF8o=
-github.com/damoon/fstesting v0.0.0-20250508125649-ba357f18f7af h1:qMxRxS/JkWMBP2nDQ+KOt2VhivGgPvMwEydJjjiTD9k=
-github.com/damoon/fstesting v0.0.0-20250508125649-ba357f18f7af/go.mod h1:muy+EJjI4goVyyu2nzlaDVnb/dOmrR4xf+hlws38Ras=
+github.com/damoon/fstesting v0.0.0-20250607005447-8c677aa30d1b h1:rxD+ufMnZWjqrnGhSh4UGWe4PZ3EnX4NQn9YoL5J/+Y=
+github.com/damoon/fstesting v0.0.0-20250607005447-8c677aa30d1b/go.mod h1:Rv7nPz/upfA9opeDJ3V7zc26gjbMZDOjQeVO1HW5Kyc=
 github.com/russross/blackfriday/v2 v2.1.0 h1:JIOH55/0cWyOuilr9/qlrm0BSXldqnqwMsf35Ld67mk=
 github.com/russross/blackfriday/v2 v2.1.0/go.mod h1:+Rmxgy9KzJVeS9/2gXHxylqXiyQDYRxCVz55jmeOWTM=
 github.com/spf13/afero v1.14.0 h1:9tH6MapGnn/j0eb0yIXiLjERO8RB6xIVZRDCX7PtqWA=
